@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "kniffo.antigravity-quota",
+  "name": "Google AI Quota",
+  "version": "1.0.0",
+  "author": "kniffo",
+  "license": "MIT",
+  "description": "Displays your Google AI plan quota, how much you have used, how much is left, AI credits, and reset timers in the Omarchy 4 shell bar.",
+  "kinds": ["bar-widget"],
+  "activation": "on-demand",
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Google AI Quota",
+    "description": "Live Google AI & Antigravity plan quota (used vs. remaining), AI credits, and local token activity.",
+    "category": "AI",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "barDisplay": "icon",
+      "meterMode": "used",
+      "warningThresholdPct": 80,
+      "refreshIntervalSec": 300,
+      "cliPath": ""
+    },
+    "schema": [
+      {
+        "key": "barDisplay",
+        "type": "enum",
+        "label": "Bar display",
+        "options": ["icon", "remaining", "used", "both"],
+        "defaultValue": "icon",
+        "description": "What to show on the bar next to the Google AI sparkle icon."
+      },
+      {
+        "key": "meterMode",
+        "type": "enum",
+        "label": "Quota meter style",
+        "options": ["used", "remaining"],
+        "defaultValue": "used",
+        "description": "Whether meters fill upward with usage ('used') or drain downward with remaining quota ('remaining')."
+      },
+      {
+        "key": "warningThresholdPct",
+        "type": "integer",
+        "label": "Warning threshold (% used)",
+        "min": 50,
+        "max": 99,
+        "step": 5,
+        "defaultValue": 80
+      },
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 30,
+        "max": 3600,
+        "step": 30,
+        "defaultValue": 300
+      },
+      {
+        "key": "cliPath",
+        "type": "path",
+        "label": "Antigravity CLI path (optional)",
+        "defaultValue": "",
+        "description": "Leave empty for automatic discovery of `agy`."
+      }
+    ]
+  }
+}
