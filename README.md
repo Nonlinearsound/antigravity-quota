@@ -1,24 +1,18 @@
 # Antigravity Quota
 
-**Your Google AI plan, in your Omarchy bar.** A sparkle that tells you at a glance how your quota is holding up, and a keyboard-first panel with every model group and rolling window **used vs. left**, live reset timers, your plan and AI credits, and your local CLI token activity, in your theme's colors.
+**Your Google AI plan, in your Omarchy bar.** Shows how much of your Antigravity quota you have used and how much is left, per model group and time window, plus your AI credits and your local CLI token usage.
+
+![Antigravity Quota: quota in your Omarchy bar](preview.png)
 
 ## What it does
 
-- **A bar icon that knows.** The Google AI sparkle stays calm while quota is plentiful, takes on the accent color past your warning threshold, and glows urgent at 90% used. Its tooltip sums up the tightest window.
+- Adds a Google AI sparkle icon to the bar. The icon changes color when your quota is running low (accent color at your warning threshold, red at 90% used).
+- Left-click opens a panel. It shows a big used/left pair for the tightest quota window, and a card for each model group (`Gemini Models`, `Gemini 4 Argon`, `Claude and GPT models`) with a meter bar, used and remaining percent, and when the limit resets.
+- Shows your Google AI plan tier (Pro, Ultra or Free) and your remaining AI credits, with a link to the credits portal.
+- Shows how many tokens and prompts your local `agy` CLI sessions used today and over the last 7 days, read from the transcripts on your disk.
+- Refreshes by itself every 5 minutes. You can also refresh by pressing `r`, middle-clicking the icon, or using `omarchy-shell ... refresh`.
+- The icon can show a percentage on the bar (`% left`, `% used`, or both), set in the plugin's settings view.
 
-- **Used and left, side by side.** Every number appears twice, from both ends: the tightest window leads the panel as a big USED / LEFT pair, and each group and window below echoes it in `10.8% used · 89.2% left`. The two halves always sum to 100%, with no rounding drift.
-
-- **Every window, counted down.** The 5-hour and weekly limits of `Gemini Models`, `Gemini 4 Argon`, and `Claude and GPT models` each get their own meter, badge and reset count (`Resets in 5d 23h · Sun Nov 8, 18:09`), refreshed with live countdown while the panel is open.
-
-- **In your theme's colors.** Meters, percentages and the icon all draw from the shell's own theme palette, switch live with a theme change, and work on horizontal and vertical bars alike.
-
-- **Your plan and your credits.** The panel header names your tier (Pro, Ultra, Free, detected from the quota itself), and a credits card shows your remaining G1 AI credits, whether overage fallback (`useG1Credits`) is on, and a one-click link to the credits portal.
-
-- **Your local token activity.** Today versus the last seven days: total tokens, prompts and a small daily bar chart, read incrementally from your own Antigravity CLI transcripts, so it never costs a quota request.
-
-- **Bar text when you want it.** The icon can stay alone, or carry `% left`, `% used`, or `used · left` inline on the bar, set from the widget's own settings view.
-
-- **Fresh on demand.** Background refresh every 5 minutes, a refresh button and `r` in the panel, a middle-click on the icon, and an IPC `refresh` — all going through a file-locked cooldown so parallel calls never hammer the backend in a burst.
 
 ## Install
 
