@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 
-// Background data controller for kniffo.antigravity-quota.
+// Background data controller for nonlinearsound.omarchy-plugin-antigravity-quota.
 // Hydrates instantly from disk cache at shell startup, refreshes periodically
 // via scripts/fetch_quota.py, and retries promptly after transient offline states.
 Item {

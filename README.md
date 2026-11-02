@@ -25,7 +25,7 @@
 Antigravity Quota needs the [Antigravity CLI](https://antigravity.google) (`agy`), signed in to your Google AI account. It finds `agy` on `PATH`, in `~/.local/bin`, `~/.gemini/antigravity-cli/bin`, `/usr/local/bin` or `/usr/bin`; set **Antigravity CLI path** in the widget's settings if yours is elsewhere. Python needs no extra package — it ships with every Omarchy install.
 
 ```
-omarchy plugin add https://github.com/kniffo/omarchy-plugin-antigravity-quota.git
+omarchy plugin add https://github.com/Nonlinearsound/antigravity-quota.git
 ```
 
 The sparkle lands in the bar's right section; drag it anywhere on the bar.
@@ -33,7 +33,7 @@ The sparkle lands in the bar's right section; drag it anywhere on the bar.
 ### Uninstall
 
 ```
-omarchy plugin remove kniffo.antigravity-quota
+omarchy plugin remove nonlinearsound.omarchy-plugin-antigravity-quota
 rm -rf ~/.cache/omarchy/antigravity-quota
 ```
 
@@ -55,9 +55,9 @@ On the bar icon: left-click toggles the panel, middle-click forces a refresh, ri
 Antigravity Quota answers over IPC, so you can bind it in `~/.config/hypr/bindings.lua`:
 
 ```
-omarchy-shell kniffo.antigravity-quota toggle
-omarchy-shell kniffo.antigravity-quota refresh
-omarchy-shell kniffo.antigravity-quota settings
+omarchy-shell nonlinearsound.omarchy-plugin-antigravity-quota toggle
+omarchy-shell nonlinearsound.omarchy-plugin-antigravity-quota refresh
+omarchy-shell nonlinearsound.omarchy-plugin-antigravity-quota settings
 ```
 
 ## Settings

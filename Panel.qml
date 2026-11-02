@@ -9,8 +9,8 @@ import qs.Ui
 
 Panel {
   id: root
-  moduleName: "kniffo.antigravity-quota"
-  ipcTarget: "kniffo.antigravity-quota"
+  moduleName: "nonlinearsound.omarchy-plugin-antigravity-quota"
+  ipcTarget: "nonlinearsound.omarchy-plugin-antigravity-quota"
   manageIpc: false
 
   readonly property bool vertical: bar ? bar.vertical : false

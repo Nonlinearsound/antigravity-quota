@@ -24,7 +24,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-PLUGIN_ID = "kniffo.antigravity-quota"
+PLUGIN_ID = "nonlinearsound.omarchy-plugin-antigravity-quota"
 PROBE_COOLDOWN_SEC = 15.0
 CLI_TIMEOUT_SEC = 20.0
 CREDITS_PORTAL_URL = "https://one.google.com/ai/credits"
