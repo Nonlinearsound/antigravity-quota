@@ -62,6 +62,8 @@ omarchy-shell nonlinearsound.omarchy-plugin-antigravity-quota settings
 
 ## Settings
 
+Widget settings are saved into your `~/.config/omarchy/shell.json`, attached to the bar-layout entry by plugin ID. Both the panel's settings view (`right-click` or `s`) and `omarchy plugin` tooling write there; removing the plugin removes the entry with it.
+
 | Setting | Default |
 | --- | --- |
 | Bar display | Icon only (or `% left`, `% used`, `used · left`) |
