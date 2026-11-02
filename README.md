@@ -1,86 +1,88 @@
-# kniffo.antigravity-quota
+# Antigravity Quota
 
-Native **Omarchy 4 (`omarchy-shell`)** bar plugin that displays your live **Google AI / Antigravity plan quota** — showing both **how much you have used** and **how much is left** across every model group and rolling window, alongside Google One AI Credits and local token activity.
+**Your Google AI plan, in your Omarchy bar.** A sparkle that tells you at a glance how your quota is holding up, and a keyboard-first panel with every model group and rolling window **used vs. left**, live reset timers, your plan and AI credits, and your local CLI token activity, in your theme's colors.
 
-## Features
+## What it does
 
-- **Native Omarchy 4 Bar Icon & Chip**: Crisp vector Google AI / Gemini 4-point sparkle icon (`QtQuick.Shapes` with 4x MSAA) that adapts automatically to all Omarchy themes and horizontal/vertical bars, with optional inline `% Left`, `% Used`, or `Used · Left` bar text.
-- **Explicit Used vs. Remaining Readout**:
-  - **Tightest Quota Hero Card**: Immediate side-by-side **USED %** and **LEFT %** display for your most constrained active quota window.
-  - **Per-Group & Per-Window Breakdown**: Tracks rolling **5-Hour** and **Weekly** windows across `Gemini Models`, `Gemini 4 Argon`, and `Claude and GPT models`, with exact complementary percentages (`used + left = 100%`) and live reset countdowns.
-- **Google AI Plan & Credits**: Automatically detects your active plan tier (`Google AI Pro`, `Ultra`, `Free`), displays remaining **G1 AI Credits** and `useG1Credits` overage fallback state, and links directly to the credits portal.
-- **Local CLI Token Activity**: Incrementally scans local Antigravity CLI transcripts (`~/.gemini/antigravity-cli/brain`) for today's and the last 7 days' token and prompt counts.
-- **Sanctioned CLI Integration**: Queries the official `agy` CLI (`-p=/quota` and `-p=/credits` with `--output-format json` and `AGY_CLI_DISABLE_AUTO_UPDATE=true`) with file-locked caching and instant startup hydration.
+- **A bar icon that knows.** The Google AI sparkle stays calm while quota is plentiful, takes on the accent color past your warning threshold, and glows urgent at 90% used. Its tooltip sums up the tightest window.
 
-## Requirements
+- **Used and left, side by side.** Every number appears twice, from both ends: the tightest window leads the panel as a big USED / LEFT pair, and each group and window below echoes it in `10.8% used · 89.2% left`. The two halves always sum to 100%, with no rounding drift.
 
-- **Omarchy 4** (`omarchy-shell` / Quickshell)
-- **Python 3**
-- **Antigravity CLI (`agy`)** signed in to your Google AI account
+- **Every window, counted down.** The 5-hour and weekly limits of `Gemini Models`, `Gemini 4 Argon`, and `Claude and GPT models` each get their own meter, badge and reset count (`Resets in 5d 23h · Sun Nov 8, 18:09`), refreshed with live countdown while the panel is open.
 
-## Installation
+- **In your theme's colors.** Meters, percentages and the icon all draw from the shell's own theme palette, switch live with a theme change, and work on horizontal and vertical bars alike.
 
-### Local Install (Symlink-free copy into Omarchy plugins)
+- **Your plan and your credits.** The panel header names your tier (Pro, Ultra, Free, detected from the quota itself), and a credits card shows your remaining G1 AI credits, whether overage fallback (`useG1Credits`) is on, and a one-click link to the credits portal.
 
-Omarchy 4's validator disallows symlinks inside `~/.config/omarchy/plugins/`. Install from this repository via Git or direct copy:
+- **Your local token activity.** Today versus the last seven days: total tokens, prompts and a small daily bar chart, read incrementally from your own Antigravity CLI transcripts, so it never costs a quota request.
 
-```bash
-# Option A: Install via Omarchy's git plugin manager (once committed)
-omarchy plugin add /home/kniffo/dev/omarchy-plugin-antigravity-quota --enable --yes
+- **Bar text when you want it.** The icon can stay alone, or carry `% left`, `% used`, or `used · left` inline on the bar, set from the widget's own settings view.
 
-# Option B: Manual install & enable
-mkdir -p ~/.config/omarchy/plugins/kniffo.antigravity-quota
-rsync -a --delete /home/kniffo/dev/omarchy-plugin-antigravity-quota/ ~/.config/omarchy/plugins/kniffo.antigravity-quota/
-omarchy-shell shell rescanPlugins
-omarchy plugin enable kniffo.antigravity-quota
+- **Fresh on demand.** Background refresh every 5 minutes, a refresh button and `r` in the panel, a middle-click on the icon, and an IPC `refresh` — all going through a file-locked cooldown so parallel calls never hammer the backend in a burst.
+
+## Install
+
+Antigravity Quota needs the [Antigravity CLI](https://antigravity.google) (`agy`), signed in to your Google AI account. It finds `agy` on `PATH`, in `~/.local/bin`, `~/.gemini/antigravity-cli/bin`, `/usr/local/bin` or `/usr/bin`; set **Antigravity CLI path** in the widget's settings if yours is elsewhere. Python needs no extra package — it ships with every Omarchy install.
+
+```
+omarchy plugin add https://github.com/kniffo/omarchy-plugin-antigravity-quota.git
 ```
 
-Move it anywhere on your bar with:
+The sparkle lands in the bar's right section; drag it anywhere on the bar.
 
-```bash
-omarchy bar move kniffo.antigravity-quota --section right
+### Uninstall
+
+```
+omarchy plugin remove kniffo.antigravity-quota
+rm -rf ~/.cache/omarchy/antigravity-quota
 ```
 
-Validate at any time with:
+Antigravity Quota changes nothing in Antigravity's own settings, and nothing else to clean up.
 
-```bash
-omarchy plugin validate /home/kniffo/dev/omarchy-plugin-antigravity-quota
+### Keys
+
+| Key | Does |
+| --- | --- |
+| `j` `k` / arrows | Scroll the panel |
+| `r` / `Enter` | Refresh the quota |
+| `s` | Open settings (save again with `s`) |
+| `c` | Open the Google AI credits portal |
+| `Tab` | Next bar panel |
+| `Esc` | Back out of settings, then close |
+
+On the bar icon: left-click toggles the panel, middle-click forces a refresh, right-click opens the settings view.
+
+Antigravity Quota answers over IPC, so you can bind it in `~/.config/hypr/bindings.lua`:
+
 ```
-
-## Bar & Keyboard Controls
-
-### Mouse (Bar Icon)
-- **Left-click**: Open / close the Google AI Quota panel
-- **Middle-click**: Force an immediate live quota refresh
-- **Right-click**: Open inline plugin settings
-
-### Keyboard (Inside Panel)
-- `j` / `k` or `↑` / `↓`: Scroll panel
-- `r` or `Enter`: Force refresh quota
-- `c`: Open Google AI Credits portal in browser
-- `s`: Open settings (or save when in settings view)
-- `Tab` / `Shift+Tab`: Switch to neighboring Omarchy bar panel
-- `Esc`: Exit settings or close panel
-
-### Shell IPC
-
-```bash
 omarchy-shell kniffo.antigravity-quota toggle
 omarchy-shell kniffo.antigravity-quota refresh
 omarchy-shell kniffo.antigravity-quota settings
 ```
 
-## Configuration (`~/.config/omarchy/shell.json`)
+## Settings
 
-Settings can be changed from the built-in Settings view (`right-click` or `s`) or via `omarchy bar set`:
+| Setting | Default |
+| --- | --- |
+| Bar display | Icon only (or `% left`, `% used`, `used · left`) |
+| Meter style | Fill upward with `% used` (or drain downward with `% left`) |
+| Warning threshold | 80% used (accent color; urgent at 90%) |
+| Refresh interval | 300 s (30–3600) |
+| Antigravity CLI path | found automatically |
 
-| Key | Type | Default | Description |
-|---|---|---|---|
-| `barDisplay` | `"icon" \| "remaining" \| "used" \| "both"` | `"icon"` | Show only the sparkle icon, or include `% Left`, `% Used`, or `Used · Left` on horizontal bars |
-| `meterMode` | `"used" \| "remaining"` | `"used"` | Fill progress meters upward with `% Used` or drain downward with `% Left` |
-| `warningThresholdPct` | integer (`50`–`99`) | `80` | Highlight icon/percentages in accent color once `% Used` reaches this threshold (`>=90%` uses urgent color) |
-| `refreshIntervalSec` | integer (`30`–`3600`) | `300` | Background polling interval in seconds |
-| `cliPath` | string | `""` | Optional explicit path to `agy` executable |
+## How it works, and what it touches
+
+All data comes from the CLI you already trust: one helper script (`scripts/fetch_quota.py`, stdlib-only Python) asks `agy` in its non-interactive JSON print mode (`-p=/quota --output-format json`, `-p=/credits ...`), normalizes the answer, derives every `used`/`left` pair from a single source fraction, and hands the panel one JSON document. Nothing is scraped, and no third-party proxy is involved — it is the same quota the CLI itself shows.
+
+- **Files:** the helper keeps a 15-second probe cache, its lock and a transcript index under `~/.cache/omarchy/antigravity-quota/` (0600, atomic writes); the panel hydrates its last known state from that cache for an instant paint on shell startup. Transcript stats read only `~/.gemini/antigravity-cli/brain/*/.../transcript.jsonl`.
+
+- **Network:** none of its own. `agy` talks to Google's backend, and the credits portal opens in your browser. If the CLI is missing or Google is down, the panel says so plainly and falls back to the last cached numbers, marked as stale.
+
+- **Privacy:** no prompts and no conversation text ever touch a command line. Quota numbers come from your own signed-in CLI and stay on your disk. Removing the plugin changes nothing in Antigravity's own settings — only the cache folder, covered by the uninstall step above.
+
+## Compatibility
+
+Verified on stock **Omarchy 4** (omarchy-shell / Quickshell) with the built-in bar, left/center/right sections, horizontal and vertical bars, and dark and light themes. The helper works on any install that has `agy`; Python ships with Omarchy. Unit tests (`python3 -m unittest discover -s tests`) cover the same normalization code the panel consumes, including the invariant `usedPct + remainingPct == 100`.
 
 ## License
 
